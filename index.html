@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,10 +14,40 @@
 				<h2 class="text-3xl max-w-6xl mx-auto">Section Above Jumplinks</h2>
 			</section>
 			<div id="mainSections" class="relative">
-				<nav id="navbar" class="bg-black py-6 sticky top-0">
+				<nav id="navbar" class="bg-black py-6 sticky top-0 px-5">
 					<div class="max-w-6xl mx-auto flex justify-between">
 						<h1 class="text-white text-xl">Section One</h1>
-						<button class="text-white text-xl">Show</button>
+						<button
+							id="navbarToggler"
+							class="text-white text-xl"
+							type="button"
+							aria-expanded="false"
+							aria-controls="navbarLinksContainer"
+							aria-label="Toggle navigation"
+						>
+							Show
+						</button>
+					</div>
+					<div class="group">
+						<div
+							id="navbarLinksContainer"
+							class="max-w-6xl mx-auto bg-black w-100 text-white max-h-0 overflow-hidden duration-200 transition-[max-height] group-[&.show]:max-h-[500px]"
+						>
+							<ul id="linksList" class="grid grid-cols-3 gap-10 py-10">
+								<li>
+									<a href="#section_1">Section One</a>
+								</li>
+								<li>
+									<a href="#section_2">Section Two</a>
+								</li>
+								<li>
+									<a href="#section_3">Section Three</a>
+								</li>
+								<li>
+									<a href="#section_4">Section Four</a>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</nav>
 				<section
