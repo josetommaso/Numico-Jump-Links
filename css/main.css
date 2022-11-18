@@ -555,10 +555,6 @@ video {
   display: grid;
 }
 
-.h-\[3px\] {
-  height: 3px;
-}
-
 .h-\[4px\] {
   height: 4px;
 }
@@ -575,33 +571,16 @@ video {
   width: 6rem;
 }
 
+.w-0 {
+  width: 0px;
+}
+
 .max-w-6xl {
   max-width: 72rem;
 }
 
-.scroll-py-12 {
-  scroll-padding-top: 3rem;
-  scroll-padding-bottom: 3rem;
-}
-
-.scroll-pt-12 {
-  scroll-padding-top: 3rem;
-}
-
-.scroll-pt-56 {
-  scroll-padding-top: 14rem;
-}
-
-.scroll-pt-96 {
-  scroll-padding-top: 24rem;
-}
-
 .scroll-pt-72 {
   scroll-padding-top: 18rem;
-}
-
-.scroll-pt-80 {
-  scroll-padding-top: 20rem;
 }
 
 .grid-cols-3 {

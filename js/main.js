@@ -53,17 +53,17 @@ links.forEach((link) => {
 //add click event to the navbar button to open/close navbar menu
 navbarTogglerButton.addEventListener('click', navbarToggler);
 
+console.log(mainSections[0].parentElement);
+
 // function to update progress bar
 const progressBarUpdater = () => {
 	//gets number of pixels from the top of viewport and the scroll position
 	const { scrollTop } = document.documentElement;
 
 	//get the height of the mainSections element
-	const { clientHeight } = mainSections[0].parentElement;
+	const { scrollHeight, offsetTop } = mainSections[0].parentElement;
 
-	const scrollPercent = `${
-		(scrollTop / (clientHeight + window.innerHeight)) * 100
-	}%`;
+	const scrollPercent = `${((scrollTop - offsetTop) / scrollHeight) * 100}%`;
 
 	progressBar.style.width = scrollPercent;
 };
