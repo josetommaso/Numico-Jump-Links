@@ -63,9 +63,16 @@ const progressBarUpdater = () => {
 	//get the height of the mainSections element
 	const { scrollHeight, offsetTop } = mainSections[0].parentElement;
 
-	const scrollPercent = `${((scrollTop - offsetTop) / scrollHeight) * 100}%`;
+	//calculate scroll % from top of the main section to the bottom
+	let scrollPercent = ((scrollTop - offsetTop) / scrollHeight) * 100;
 
-	progressBar.style.width = scrollPercent;
+	//remove decimals from calculation
+	scrollPercent = Math.round(scrollPercent);
+
+	//update progress bar if % is more than 0 and less than 100
+	if (scrollPercent >= 0 || scrollPercent <= 100) {
+		progressBar.style.width = `${scrollPercent}%`;
+	}
 };
 
 //add scroll event to update the progress bar
