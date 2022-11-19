@@ -1,4 +1,3 @@
-//variables
 const mainSections = document.querySelectorAll('#mainSections section');
 const navbar = document.querySelector('#navbar');
 const navbarTitle = document.querySelector('#navbar h1');
@@ -6,72 +5,63 @@ const navbarTogglerButton = document.querySelector('#navbarToggler');
 const links = document.querySelectorAll('#navbar #linksList li a');
 const progressBar = document.querySelector('#progressBar');
 
-//options for the observer
 const options = {
 	threshold: 0.5,
 };
 
-//make a new instance of IntersectionObserver
+/*
+ * makes a new observer instance in each mainSection
+ *
+ */
 const observer = new IntersectionObserver((entries) => {
-	entries.forEach((element) => {
-		//if section is in viewport
-		if (element.isIntersecting) {
-			//change the navigation title text with the h2 text
-			navbarTitle.innerHTML = element.target.firstElementChild.innerText;
+	entries.forEach((section) => {
+		if (section.isIntersecting) {
+			navbarTitle.innerHTML = section.target.firstElementChild.innerText; // if section in viewport changes navbar title
 		}
 	});
 }, options);
 
-// initialize observer in each main section
 mainSections.forEach((section) => {
-	observer.observe(section);
+	observer.observe(section); // Initialize observer in each section
 });
 
-//navbar functionality
+/*
+ * Shows and hide navigation menu
+ * changes button text and aria-expanded attribute value
+ */
 const navbarToggler = () => {
 	const group = document.querySelector('#navbar .group');
 
-	// toggle class to show/hide menu
 	group.classList.toggle('show');
 
-	//if element has class show, change text of button to "Hide" and change aria expanded attr to true
 	if (group.classList.contains('show')) {
 		navbarTogglerButton.innerText = 'Hide';
 		navbarTogglerButton.ariaExpanded = 'true';
 	} else {
-		//change back button to show if element has not class show and change aria expanded to false
 		navbarTogglerButton.innerText = 'Show';
 		navbarTogglerButton.ariaExpanded = 'false';
 	}
 };
 
-//add click event to every link in the navbar menu so it close once its clicked
 links.forEach((link) => {
-	link.addEventListener('click', navbarToggler);
+	link.addEventListener('click', navbarToggler); // close navigation menu when link is clicked
 });
 
-//add click event to the navbar button to open/close navbar menu
-navbarTogglerButton.addEventListener('click', navbarToggler);
+navbarTogglerButton.addEventListener('click', navbarToggler); // close navigation menu when nav button is clicked
 
-// function to update progress bar
 const progressBarUpdater = () => {
-	//gets number of pixels from the top of viewport and the scroll position
-	const { scrollTop } = document.documentElement;
+	const { scrollTop } = document.documentElement; // number of pixels from top of viewport and scroll position
 
-	//get the height of the mainSections element
-	const { scrollHeight, offsetTop } = mainSections[0].parentElement;
+	const { scrollHeight, offsetTop } = mainSections[0].parentElement; // height of #mainSections element and position
 
-	//calculate scroll % from top of the main section to the bottom
-	let scrollPercent = ((scrollTop - offsetTop) / scrollHeight) * 100;
+	let scrollPercent = ((scrollTop - offsetTop) / scrollHeight) * 100; // Calculate scroll % of #mainSection
 
-	//remove decimals from calculation
-	scrollPercent = Math.round(scrollPercent);
+	scrollPercent = Math.round(scrollPercent); //remove decimals from calculation
 
-	//update progress bar if % is more than 0 and less than 100
 	if (scrollPercent >= 0 || scrollPercent <= 100) {
+		//update progress bar if % is more than 0 and less than 100
 		progressBar.style.width = `${scrollPercent}%`;
 	}
 };
 
-//add scroll event to update the progress bar
-document.addEventListener('scroll', progressBarUpdater);
+document.addEventListener('scroll', progressBarUpdater); //fire progressBar function on scroll
