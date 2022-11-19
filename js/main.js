@@ -53,8 +53,6 @@ links.forEach((link) => {
 //add click event to the navbar button to open/close navbar menu
 navbarTogglerButton.addEventListener('click', navbarToggler);
 
-console.log(mainSections[0].parentElement);
-
 // function to update progress bar
 const progressBarUpdater = () => {
 	//gets number of pixels from the top of viewport and the scroll position
