@@ -4,6 +4,7 @@ const navbarTitle = document.querySelector('#navbar h1');
 const navbarTogglerButton = document.querySelector('#navbarToggler');
 const links = document.querySelectorAll('#navbar #linksList li a');
 const progressBar = document.querySelector('#progressBar');
+const navbarMenu = document.querySelector('#navbarMenu');
 
 const options = {
 	threshold: 0.5,
@@ -11,7 +12,6 @@ const options = {
 
 /*
  * makes a new observer instance in each mainSection
- *
  */
 const observer = new IntersectionObserver((entries) => {
 	entries.forEach((section) => {
@@ -30,24 +30,28 @@ mainSections.forEach((section) => {
  * changes button text and aria-expanded attribute value
  */
 const navbarToggler = () => {
-	const group = document.querySelector('#navbar .group');
+	navbarMenu.classList.toggle('show');
 
-	group.classList.toggle('show');
-
-	if (group.classList.contains('show')) {
+	if (navbarMenu.classList.contains('show')) {
 		navbarTogglerButton.innerText = 'Hide';
 		navbarTogglerButton.ariaExpanded = 'true';
+		navbarMenu.style.maxHeight = `${navbarMenu.scrollHeight}px`;
 	} else {
 		navbarTogglerButton.innerText = 'Show';
 		navbarTogglerButton.ariaExpanded = 'false';
+		navbarMenu.style.maxHeight = '0px';
 	}
 };
 
-links.forEach((link) => {
-	link.addEventListener('click', navbarToggler); // close navigation menu when link is clicked
-});
-
-navbarTogglerButton.addEventListener('click', navbarToggler); // close navigation menu when nav button is clicked
+//scroll animation with gsap
+const scrollToView = (link) => {
+	const href = link.hash;
+	gsap.to(window, {
+		duration: 3,
+		scrollTo: { y: href, offsetY: navbar.scrollHeight - 3 },
+		ease: 'power2',
+	});
+};
 
 const progressBarUpdater = () => {
 	const { scrollTop } = document.documentElement; // number of pixels from top of viewport and scroll position
@@ -56,7 +60,7 @@ const progressBarUpdater = () => {
 
 	let scrollPercent = ((scrollTop - offsetTop) / scrollHeight) * 100; // Calculate scroll % of #mainSection
 
-	scrollPercent = Math.round(scrollPercent); //remove decimals from calculation
+	scrollPercent = scrollPercent.toFixed(1); //remove decimals from calculation
 
 	if (scrollPercent >= 0 || scrollPercent <= 100) {
 		//update progress bar if % is more than 0 and less than 100
@@ -64,4 +68,18 @@ const progressBarUpdater = () => {
 	}
 };
 
+/* Event listeners */
+links.forEach((link) => {
+	link.addEventListener('click', (e) => {
+		e.preventDefault();
+
+		navbarToggler(); // close navigation menu when link is clicked
+
+		setTimeout(() => {
+			scrollToView(link); // scroll to section after 450ms
+		}, 450);
+	});
+});
+
+navbarTogglerButton.addEventListener('click', navbarToggler); // close navigation menu when nav button is clicked
 document.addEventListener('scroll', progressBarUpdater); //fire progressBar function on scroll
